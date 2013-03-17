@@ -31,7 +31,7 @@ public class EditHomeworkController {
         model.addAttribute("editHomework", true);
         Course course = user.getCourseSelected();
         List<Homework> homeworks = this.homeworkDao.
-                getHomeWorksForCourseThatHaveNotStarted(course.getCourseId());
+                getHomeWorksToEdit(course.getCourseId());
         course.setHomeworks(homeworks);
         return "selectHomework";
     }
@@ -71,12 +71,15 @@ public class EditHomeworkController {
                     getHomework(), request, result,this.homeworkDao, course);
             validateHomework.updateEditHomework();
             if(result.hasErrors()){
-                int selectedHomeworkId = user.getCourseSelected().getHomework().getId();
+                int selectedHomeworkId = user.getCourseSelected().getHomework().
+                        getId();
                 List<Question> notAdded  = this.homeworkDao.
                         getAllQuestionsNotAddedInHomework(selectedHomeworkId);
                 model.addAttribute("addedQuestions", user.getCourseSelected().
                         getHomework().getQuestions());
                 model.addAttribute("notAddedQuestions", notAdded);
+                model.addAttribute("started", user.getCourseSelected().getHomework().
+                        hasStarted());
                 return  pageForms.get(currentPage);
             }
             return "homeworkCreated";
@@ -89,7 +92,8 @@ public class EditHomeworkController {
             }
             int selectedHomeworkId = Integer.parseInt(
                     request.getParameter("homework"));
-            Homework homework = user.getCourseSelected().getSelectedHomework(selectedHomeworkId);
+            Homework homework = user.getCourseSelected().
+                    getSelectedHomework(selectedHomeworkId);
             List<Question> addedQuestions = this.homeworkDao.
                     getAllQuestionsOfHomework(homework.getId());
             homework.setQuestions(addedQuestions);
@@ -97,6 +101,8 @@ public class EditHomeworkController {
                     getAllQuestionsNotAddedInHomework(selectedHomeworkId);
             model.addAttribute("addedQuestions", addedQuestions);
             model.addAttribute("notAddedQuestions", notAdded);
+            model.addAttribute("started", user.getCourseSelected().getHomework().
+                    hasStarted());
             if(result.hasErrors())
                 return  pageForms.get(currentPage);
             return pageForms.get(targetPage);

@@ -20,7 +20,7 @@ Score : <c:out value="${summary.score}" /> <br/>
     </c:if>
     <br/><br/>
 </c:forEach>
-<a href="home">home</a>     | <a href="attemptHomework">attempt another homework</a>
+<a href="home">home</a>     | <a href="viewPastSubmissions">View another submission</a>
 
 </body>
 </html>

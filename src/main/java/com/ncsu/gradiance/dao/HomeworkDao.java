@@ -126,9 +126,9 @@ public class HomeworkDao {
         return homeworks;
     }
 
-    public List<Homework> getHomeWorksForCourseThatHaveNotStarted(String courseId){
+    public List<Homework> getHomeWorksToEdit(String courseId){
         java.sql.Timestamp now = new Timestamp(new Date().getTime());
-        return this.jdbcTemplate.query("select * from homeworks where course_id = ? and start_date > ?",
+        return this.jdbcTemplate.query("select * from homeworks where course_id = ? and end_date > ?",
                                        new Object[]{courseId, now},
                                        new HomeworkMapper(this, this.courseDao));
     }
@@ -200,9 +200,17 @@ public class HomeworkDao {
 
     public List<Homework> getHomeworksStudentCanAttempt(String studentId, String courseId){
         java.sql.Timestamp now = new Timestamp(new Date().getTime());
-        return this.jdbcTemplate.query("select * from homeworks h where h.course_id = ?  and h.start_date < ? and h.end_date > ? and h.num_attempts > (select count(*) from hw_student hst where hst.hw_id = h.hw_id and hst.student_id = ?)",
+        List<Homework> canAttempt = this.jdbcTemplate.query("select * from homeworks h where h.course_id = ?  and h.start_date < ? and h.end_date > ? and h.num_attempts > (select count(*) from hw_student hst where hst.hw_id = h.hw_id and hst.student_id = ?)",
                                        new Object[]{courseId, now, now, studentId},
                                        new HomeworkMapper(this, this.courseDao));
+
+        List<Homework> infiniteAttempts = this.jdbcTemplate.query("select * from homeworks h where h.course_id = ?  and h.start_date < ? and h.end_date > ? and h.num_attempts = 0",
+                                new Object[]{courseId, now, now},
+                                new HomeworkMapper(this, this.courseDao));
+        for(Homework infiniteAttempt : infiniteAttempts)
+            if(!canAttempt.contains(infiniteAttempt))
+                canAttempt.add(infiniteAttempt);
+        return canAttempt;
     }
 
     public List<Homework> submittedHomeworks(String studentId){
@@ -239,6 +247,12 @@ public class HomeworkDao {
              "incorrect_ans_pts=?,numQuestions=? where hw_id=?",
               new Object[]{scheme, start, end, attempts, correctPts, incorrectPts, numQUes, hwId});
 
+    }
+
+    public void updateHomeworkAlreadyStartedForEdit(Integer numAttempts,
+                                            Timestamp endDate, Integer hwId){
+        this.jdbcTemplate.update("update homeworks  set end_date=?, num_attempts=? where hw_id=?",
+                                 new Object[]{endDate, numAttempts, hwId});
     }
 
     public List<Question> getAllQuestionsOfHomework(int hwId){

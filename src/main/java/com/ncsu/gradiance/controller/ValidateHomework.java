@@ -40,6 +40,7 @@ public class ValidateHomework {
 
     public void updateEditHomework(){
         try{
+            if(!homework.hasStarted()){
             Integer numAttempts = Integer.parseInt(
                     request.getParameter("homework.numAttempts"));
             if(numAttempts < 0){
@@ -104,7 +105,34 @@ public class ValidateHomework {
             this.homeworkDao.updateHomeworkForEdit(scoreSelectionScheme.getSchemeId(),
                  homework.getStartDate(), homework.getEndDate(), numAttempts,
                  correctPts, incorrectPts,numQues, homework.getId());
-
+            }
+            else{
+                Integer numAttempts = Integer.parseInt(
+                        request.getParameter("homework.numAttempts"));
+                String endStr = request.getParameter("homework.endDate");
+                if(isEmpty(new String[]{ endStr})){
+                    errors.rejectValue("", "", "all field are mandatory");
+                    return;
+                }
+                if(homework.getNumAttempts() == 0 && numAttempts != 0){
+                    errors.rejectValue("", "", "num of attempts should be 0");
+                    return;
+                }
+                else if(numAttempts < homework.getNumAttempts() && numAttempts != 0){
+                    errors.rejectValue("", "", "num of attempts should be more than " +
+                            homework.getNumAttempts());
+                    return;
+                }
+                Timestamp endDate = getTimeStamp(endStr);
+                if(!(endDate.after(homework.getEndDate()) || endDate.equals(
+                        homework.getEndDate()))) {
+                    errors.rejectValue("", "", "end date should be after " +
+                            homework.getEndDate().toString());
+                    return;
+                }
+                this.homeworkDao.updateHomeworkAlreadyStartedForEdit(numAttempts,
+                                                  endDate, homework.getId());
+            }
         }catch (Exception e){
             errors.rejectValue("", "", e.getMessage());
         }

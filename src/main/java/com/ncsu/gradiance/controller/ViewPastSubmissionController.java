@@ -45,7 +45,7 @@ public class ViewPastSubmissionController {
         int attemptId = Integer.parseInt(ids[1]);
         Homework homework = user.getCourseSelected().getSelectedHomework(hwId);
         homework.setAttemptById(attemptId);
-        model.addAttribute("summary", homework);
+        model.addAttribute("summary", homework.getCurrentAttempt());
         return "viewHomeworkSubmissionSummary";
     }
 

@@ -165,5 +165,19 @@ public class Homework {
         return null;
     }
 
+    public boolean equals(Object o){
+        if(o == null || !(o instanceof  Homework))
+            return false;
+        Homework that = (Homework)o;
+        return this.id == that.id;
+    }
+
+    public boolean hasStarted(){
+        if(this.startDate == null)
+            throw new IllegalStateException();
+        Timestamp now = new Timestamp(new java.util.Date().getTime());
+        return now.after(this.startDate);
+    }
+
 
 }
