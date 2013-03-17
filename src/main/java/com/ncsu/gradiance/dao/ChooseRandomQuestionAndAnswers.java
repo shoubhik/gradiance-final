@@ -49,14 +49,14 @@ public class ChooseRandomQuestionAndAnswers {
         return attempt;
     }
 
-
-
-
     private List<Question> getRandomQuestions(int seed){
         List<Question> questions = this.homeworkDao.getAllQuestionsOfHomework(
                 homework.getId());
         List<Question> randomQuestions = new ArrayList<>();
-        Random random = new Random(seed);
+        // throw in a random function so that each homework has
+        // different questions assigned
+        int randFn = Math.abs((int)Math.random() + homework.getId()) % 5;
+        Random random = new Random(seed%randFn);
         while(randomQuestions.size() != homework.getNumQuestions()){
             int rand = Math.abs(random.nextInt()%questions.size());
             Question question = questions.get(rand);
@@ -92,6 +92,4 @@ public class ChooseRandomQuestionAndAnswers {
         selectedAnswers.set(0, temp);
         return selectedAnswers;
     }
-
-
 }
