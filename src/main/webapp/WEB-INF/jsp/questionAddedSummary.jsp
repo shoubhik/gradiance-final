@@ -5,6 +5,7 @@
     <title></title>
 </head>
 <body>
+<%@include file='logout.jsp'%>
 <c:if test="${newquestion}">
  Question successfully added!!
 </c:if>

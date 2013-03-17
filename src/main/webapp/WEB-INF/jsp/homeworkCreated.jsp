@@ -5,8 +5,9 @@
     <title></title>
 </head>
 <body>
+<%@include file='logout.jsp'%>
     Homework successfully added!!
 <br/>
-<a href="selectCourse">home</a>
+<a href="selectCourse">home</a>   | <a href="addHomework">add another homework</a>
 </body>
 </html>

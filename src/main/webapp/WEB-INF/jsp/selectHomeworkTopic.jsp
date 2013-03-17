@@ -13,6 +13,7 @@
 </head>
 
 <body>
+<%@include file='logout.jsp'%>
 Select the topic for which you want to add the question:<br/>
 <form:form method="post" modelAttribute="selectedCourse">
     <td><form:errors path="" cssClass="error" /></td>

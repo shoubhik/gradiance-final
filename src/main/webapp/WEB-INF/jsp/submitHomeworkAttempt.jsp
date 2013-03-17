@@ -3,9 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+    <style>
+        .error {
+            color: #ff0000;
+            font-weight: bold;
+        }
+    </style>
     <title>Homework</title>
 </head>
 <body>
+<%@include file='logout.jsp'%>
 <form:form method="post" modelAttribute="user">
     <form:errors path="" cssClass="error" />
     <table>

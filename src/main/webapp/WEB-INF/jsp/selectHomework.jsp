@@ -13,6 +13,7 @@
 </head>
 
 <body>
+<%@include file='logout.jsp'%>
 <c:if test="${editHomework}">
 Select the homework  which you want to edit: Only homeworks that have not yet started are shown here and can be edited<br/>
 </c:if>

@@ -200,8 +200,8 @@ public class HomeworkDao {
 
     public List<Homework> getHomeworksStudentCanAttempt(String studentId, String courseId){
         java.sql.Timestamp now = new Timestamp(new Date().getTime());
-        return this.jdbcTemplate.query("select * from homeworks where course_id = ?  and start_date <= ? and end_date >= ?",
-                                       new Object[]{courseId, now, now},
+        return this.jdbcTemplate.query("select * from homeworks h where h.course_id = ?  and h.start_date < ? and h.end_date > ? and h.num_attempts > (select count(*) from hw_student hst where hst.hw_id = h.hw_id and hst.student_id = ?)",
+                                       new Object[]{courseId, now, now, studentId},
                                        new HomeworkMapper(this, this.courseDao));
     }
 

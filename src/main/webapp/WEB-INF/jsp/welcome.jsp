@@ -14,6 +14,7 @@
 
 </head>
 <body>
+Login <br/>
 <form:form method="post" modelAttribute="user">
     <form:errors path="" cssClass="error"/>
     <table>

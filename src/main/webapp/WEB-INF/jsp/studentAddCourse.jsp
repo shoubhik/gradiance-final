@@ -11,6 +11,7 @@
     </style>
 </head>
 <body>
+<%@include file='logout.jsp'%>
 Only the courses that have not expired and not previously added can be added.<br/>
 <form:form method="post" modelAttribute="user">
     <form:errors path="" cssClass="error"/>

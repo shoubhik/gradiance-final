@@ -5,6 +5,7 @@
     <title></title>
 </head>
 <body>
+<%@include file='logout.jsp'%>
 hello <c:out value="${user.roleName}"/> <c:out value="${user.userName}"/><br/>
 <a href="selectCourse">select course</a>        <br/>
 <a href="home">Back</a>                         <br/>

@@ -6,6 +6,7 @@
     <title>Select course</title>
 </head>
 <body>
+<%@include file='logout.jsp'%>
 Please select a course that you are affiliated with as a <c:out value="${user.roleName}"/>
 <form:form method="post" modelAttribute="user">
     <form:errors path="" cssClass="error"/>

@@ -5,8 +5,9 @@
     <title>Submission Summary</title>
 </head>
 <body>
-Score : <c:out value="${summary.currentAttempt.score}" /> <br/>
-<c:forEach var="question" items="${summary.currentAttempt.questions}">
+<%@include file='logout.jsp'%>
+Score : <c:out value="${summary.score}" /> <br/>
+<c:forEach var="question" items="${summary.questions}">
     Question: <c:out value="${question.text}" /><br/>
     Your Response: <c:out value="${question.response.text}" /><br/>
     <c:if test="${question.response.correct }">
@@ -19,7 +20,7 @@ Score : <c:out value="${summary.currentAttempt.score}" /> <br/>
     </c:if>
     <br/><br/>
 </c:forEach>
-<a href="home">home</a>
+<a href="home">home</a>     | <a href="attemptHomework">attempt another homework</a>
 
 </body>
 </html>

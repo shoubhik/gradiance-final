@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 
 @Controller
 @RequestMapping("/attemptHomework")
@@ -51,10 +49,16 @@ public class AttemptHomeworkController {
         pageForms.put(1,"selectHomeworkToAttempt");
         pageForms.put(2,"submitHomeworkAttempt");
         if(request.getParameter("_cancel") != null){
-            return pageForms.get(0);
+            return "redirect:attemptHomework";
         }
         else if(request.getParameter("_finish") != null){
             // handle finish
+            Homework homework =  user.getCourseSelected().getHomework();
+            java.sql.Timestamp now = new Timestamp(new Date().getTime());
+            if(now.after(homework.getEndDate())){
+                result.rejectValue("", "", "Homework has expired");
+                return pageForms.get(currentPage);
+            }
             Attempt attempt = user.getCourseSelected().getHomework().getCurrentAttempt();
             Scorer scorer = new Scorer(attempt, request, user.getCourseSelected().getHomework());
             scorer.calculate();

@@ -61,7 +61,7 @@ public class AddHomeWorkController {
     public String submitForm(@ModelAttribute("user") User user,
                              BindingResult result,
                              @RequestParam("_page") int currentPage,
-                             HttpServletRequest request){
+                             HttpServletRequest request, Model model){
         if(request.getParameter("_cancel") != null){
 
             return "redirect:selectCourse";
@@ -74,8 +74,10 @@ public class AddHomeWorkController {
                                  this.homeworkDao, course);
             validateHomework.validateNewHomeWork();
             this.homeworkDao.insertHomework(course.getHomework(), result);
-            if(result.hasErrors())
+            if(result.hasErrors()) {
+                model.addAttribute("questions", user.getCourseSelected().getQuestions());
                 return  "submitHomework";
+            }
             return "homeworkCreated";
         }
 

@@ -18,48 +18,48 @@
     </c:if>
 </head>
 <body>
+<%@include file='logout.jsp'%>
     <p> Edit Homework</p>
 
     <form:form method="post" modelAttribute="user">
-    <form:errors path="" cssClass="error" />
-        <c:set var="homework" value="${user.courseSelected.homework}"/>
+        <form:errors path="" cssClass="error" />
         <table>
             <tr>
                 <td>Homework Name</td>
-                    <td><c:out value="${homework.name}"/></td>
+                    <td><c:out value="${user.courseSelected.homework.name}"/></td>
             </tr>
             <tr>
                 <td>Start Date</td>
-                <td><input type="text" name="homework.startDate" value="${homework.getStartDateString()}"/></td>
+                <td><input type="text" name="homework.startDate" /></td>
                 <td>specify date in 'yyyy-MM-dd:hh:mm:ss' format</td>
             </tr>
             <tr>
                 <td>End Date</td>
-                <td><input type="text" name="homework.endDate" value="${homework.getEndDAteString()}"/></td>
+                <td><input type="text" name="homework.endDate" /></td>
                 <td>specify date in 'yyyy-MM-dd:hh:mm:ss' format</td>
             </tr>
             <tr>
                 <td>Max Attempts</td>
-                <td><input type="text" name="homework.numAttempts" value="${homework.numAttempts}"/></td>
+                <td><input type="text" name="homework.numAttempts" /></td>
             </tr>
             <tr>
                 <td>Enter 0 for infinite attempts</td>
             </tr>
             <tr>
                 <td>Score selection scheme</td>
-                <td><form:select  path="courseSelected.homework.scoreSelectionScheme" items="${schemes}"  /></td>
+                <td><form:select  path="courseSelected.homework.scoreSelectionScheme" items="${schemes}"/></td>
             </tr>
             <tr>
                 <td>Correct Points for questions</td>
-                <td><input type="text" name="homework.correctPts" value="${homework.correctPts}"/></td>
+                <td><input type="text" name="homework.correctPts" /></td>
             </tr>
             <tr>
                 <td>Incorrect Points for questions</td>
-                <td><input type="text" name="homework.incorrectPts" value="${homework.incorrectPts}"/></td>
+                <td><input type="text" name="homework.incorrectPts" /></td>
             </tr>
             <tr>
                 <td>Number of questions</td>
-                <td><input type="text" name="homework.numQuestions" value="${homework.numQuestions}"/></td>
+                <td><input type="text" name="homework.numQuestions" /></td>
                 <td><b>this number should be less tha or equal to number of questions you select</b></td>
             </tr>
                 <tr>
@@ -80,7 +80,12 @@
                 </c:forEach>
             <tr>
                 <td colspan="3">
-                    <input type="hidden" value="2" name="_page"/>
+                    <c:if test="${newhomework}">
+                        <input type="hidden" value="1" name="_page"/>
+                    </c:if>
+                    <c:if test="${!newhomework}">
+                        <input type="hidden" value="2" name="_page"/>
+                    </c:if>
                     <input type="submit" value="Finish" name="_finish"/>
                     <input type="submit" value="Cancel" name="_cancel"/>
                 </td>

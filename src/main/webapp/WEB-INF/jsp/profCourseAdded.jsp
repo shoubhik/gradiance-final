@@ -5,6 +5,7 @@
     <title>Course Added</title>
 </head>
 <body>
+<%@include file='logout.jsp'%>
   the course  with id <c:out value="${course.courseId}"/> and name <c:out value="${course.courseName}"/>  has been added to your account
   <br/> course toke is : <b><c:out value="${course.tokenId}"/> </b>
  <br/>

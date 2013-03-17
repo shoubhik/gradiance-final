@@ -60,7 +60,7 @@ public class EditHomeworkController {
         model.addAttribute("newhomework", false);
         Map<Integer, String> pageForms = new HashMap<>();
         pageForms.put(1,"selectHomework");
-        pageForms.put(2,"ediHomework");
+        pageForms.put(2,"editHomework");
         if(request.getParameter("_cancel") != null){
             return "redirect:home";
         }

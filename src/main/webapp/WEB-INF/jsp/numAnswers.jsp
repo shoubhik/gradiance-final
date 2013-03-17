@@ -13,6 +13,7 @@
     <title>Enter Number Of Questions</title>
 </head>
 <body>
+<%@include file='logout.jsp'%>
 <c:if test="${newquestion}">
 <p>Input number of correct and incorrect answers for this question.
     there should be at minimum 1 correct and 3 incorrect answers.

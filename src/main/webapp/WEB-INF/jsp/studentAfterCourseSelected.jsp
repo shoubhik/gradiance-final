@@ -5,6 +5,7 @@
     <title>Options</title>
 </head>
 <body>
+<%@include file='logout.jsp'%>
 Selected Options: <c:out value="${user.courseSelected.courseId}"/> | <c:out value="${user.courseSelected.courseName}"/>
 <br/>
 <a href="attemptHomework">Attempt homework</a><br/>

@@ -14,6 +14,7 @@
 </head>
 
 <body>
+<%@include file='logout.jsp'%>
 <c:if test="${empty user.courseSelected.topics}">
     there are not topics in this course select another course <br/>
     <a href="selectCourse">back</a>

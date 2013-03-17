@@ -162,7 +162,7 @@ public class ValidateHomework {
     }
 
     private Timestamp getTimeStamp(String str) throws ParseException {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd:kk:mm:ss");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss");
         return new Timestamp(df.parse(str).getTime());
     }
 

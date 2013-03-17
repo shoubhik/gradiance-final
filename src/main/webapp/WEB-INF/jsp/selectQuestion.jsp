@@ -13,6 +13,7 @@
     </style>
 </head>
 <body>
+<%@include file='logout.jsp'%>
 <c:if test="${empty user.courseSelected.selectedTopic.questions}">
     there are not questions in this topic select another topic <br/>
     <a href="addAnswer">back</a>

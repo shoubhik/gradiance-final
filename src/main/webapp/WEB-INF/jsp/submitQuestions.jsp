@@ -13,6 +13,7 @@
     <title>Add Question</title>
 </head>
 <body>
+<%@include file='logout.jsp'%>
 <p> Add question to question bank</p>
 <form:form method="post" modelAttribute="user">
     <form:errors path="" cssClass="error" />

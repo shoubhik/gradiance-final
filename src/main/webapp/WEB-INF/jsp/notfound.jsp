@@ -4,6 +4,7 @@
 </head>
 
 <body>
+<%@include file='logout.jsp'%>
 Page Not Found
 </body>
 </html>

@@ -41,7 +41,8 @@ public class LoginController {
         String username = request.getParameter("uname");
         String password = request.getParameter("password");
         User user = this.userDao.getUser(username, password, result);
+        if(result.hasErrors()) return "welcome";
         model.addAttribute("user", user);
-        return !result.hasErrors() ? "redirect:home" : "welcome";
+        return "redirect:home" ;
     }
 }

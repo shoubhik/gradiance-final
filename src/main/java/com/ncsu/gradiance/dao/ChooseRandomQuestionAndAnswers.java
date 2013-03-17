@@ -16,6 +16,7 @@ public class ChooseRandomQuestionAndAnswers {
     private Homework homework;
     private static int NUM_CORRECT = 1;
     private static int NUM_INCORRECT = 3;
+    private static int TOTAL_ANSWERS= NUM_CORRECT + NUM_INCORRECT;
 
     public ChooseRandomQuestionAndAnswers(HomeworkDao homeworkDao, User student,
                                           Homework homework, Errors errors){
@@ -77,14 +78,18 @@ public class ChooseRandomQuestionAndAnswers {
             if(!selectedAnswers.contains(answer) && answer.isCorrect())
                 selectedAnswers.add(answer);
         }
-
-        while(selectedAnswers.size() != NUM_CORRECT + NUM_INCORRECT){
+        while(selectedAnswers.size() != TOTAL_ANSWERS){
             int rand = Math.abs(random.nextInt() % allAnswers.size());
             Answer answer = allAnswers.get(rand);
             if(!selectedAnswers.contains(answer) && !answer.isCorrect())
                 selectedAnswers.add(answer);
 
         }
+        // now put the right answer in a random position
+        int right = Math.abs(random.nextInt() % TOTAL_ANSWERS);
+        Answer temp = selectedAnswers.get(right);
+        selectedAnswers.set(right, selectedAnswers.get(0));
+        selectedAnswers.set(0, temp);
         return selectedAnswers;
     }
 

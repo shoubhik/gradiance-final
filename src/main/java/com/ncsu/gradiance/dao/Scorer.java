@@ -23,8 +23,11 @@ public class Scorer {
         int totalScore = 0;
         for(Question question : attempt.getQuestions()){
             String ansId = request.getParameter(question.getId()+"");
-            if(StringUtils.isBlank(ansId))
-                totalScore += incorrectPts;
+            if(StringUtils.isBlank(ansId)){
+                // for new keep the ugly code in case the specs
+                // change again
+                totalScore += 0;
+            }
             else if(question.isResponseCorrect(Integer.parseInt(ansId)))
                 totalScore += correctPts;
             else totalScore += incorrectPts;
@@ -36,7 +39,8 @@ public class Scorer {
                 question.setExplaination(explain);
 
         }
-        attempt.setScore(totalScore);
+        //  minimum  score can be 0
+        attempt.setScore(Math.max(totalScore,0));
     }
 
 

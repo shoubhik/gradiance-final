@@ -11,6 +11,7 @@
     <title></title>
 </head>
 <body>
+<%@include file='logout.jsp'%>
  <b>Course could not be added<br/> Reason:Token not valid</b>
 <a href="home">back</a>
 </body>

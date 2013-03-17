@@ -5,6 +5,7 @@
     <title>Homework Summary</title>
 </head>
 <body>
+<%@include file='logout.jsp'%>
 Homework Name : <c:out value="${homework.name}" /> <br/>
 Start Date: <c:out value="${homework.startDate.toString()}" /> <br/>
 End Date: <c:out value="${homework.endDate.toString()}" /> <br/>

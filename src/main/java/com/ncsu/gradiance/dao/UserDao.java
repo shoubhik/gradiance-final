@@ -29,15 +29,17 @@ public class UserDao {
 
 
     public User getUser(String userName, String password, Errors errors){
-        if(getUserCount(userName, password) != 1 ){
-            errors.rejectValue("", "user.invalid", "invalid user");
-            return null;
-        }
         User user = null;
-        if(isProf(userName))
-            user = getProfessor(userName);
-        else if(isStudent(userName))
-            user = getStudent(userName);
+        try {
+            if(getUserCount(userName, password) != 1){
+                errors.rejectValue("", "user.invalid", "invalid user");
+                return null;
+            }
+            if (isProf(userName)) user = getProfessor(userName);
+            else if (isStudent(userName)) user = getStudent(userName);
+        } catch (Exception e) {
+            errors.rejectValue("", "user.invalid", "invalid user");
+        }
         return user;
     }
 

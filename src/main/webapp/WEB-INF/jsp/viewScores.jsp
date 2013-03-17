@@ -5,6 +5,7 @@
     <title>Scores</title>
 </head>
 <body>
+<%@include file='logout.jsp'%>
 <table border="1">
     <tr>
         <th>Homework Name</th>

@@ -12,6 +12,7 @@
         }
     </style>
 </head><body>
+<%@include file='logout.jsp'%>
 <form:form method="post" modelAttribute="user">
     <td><form:errors path="" cssClass="error" /></td>
     <table>

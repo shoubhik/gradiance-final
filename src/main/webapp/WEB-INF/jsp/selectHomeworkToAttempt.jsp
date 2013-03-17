@@ -13,6 +13,7 @@
 </head>
 
 <body>
+<%@include file='logout.jsp'%>
 <c:if test="${empty user.courseSelected.homeworks}">
     There are no available homeworks<br/>
     <a href="home">back</a>
