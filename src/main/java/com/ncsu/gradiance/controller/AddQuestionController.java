@@ -14,15 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/addQuestion")
 @SessionAttributes("user")
-public class AddQuestionController {
+public class AddQuestionController extends BaseController{
 
     private QuestionDao questionDao;
     @Autowired
@@ -32,6 +29,8 @@ public class AddQuestionController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String showWizard(@ModelAttribute("user") User user){
+        if(!user.isProf())
+            throw new AuthorizationException();
         return "selectTopic";
     }
 
@@ -46,7 +45,7 @@ public class AddQuestionController {
         pageForms.put(1,"numAnswers");
         pageForms.put(2,"submitQuestions");
         if(request.getParameter("_cancel") != null){
-            return pageForms.get(0);
+            return "redirect:home";
         }
         else if(request.getParameter("_finish") != null){
             // handle finish
@@ -105,6 +104,8 @@ public class AddQuestionController {
     @ModelAttribute("topic")
     public List<String> getTopics(@ModelAttribute("user") User user,
                                   BindingResult result){
+        if(user.getCourseSelected() == null)
+            return Collections.singletonList("");
         List<String> topics = new ArrayList<>();
         for(Topic topic : user.getCourseSelected().getTopics())
             topics.add(topic.toString());

@@ -22,7 +22,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/addHomework")
 @SessionAttributes("user")
-public class AddHomeWorkController {
+public class AddHomeWorkController extends BaseController{
 
     private HomeworkDao homeworkDao;
     private QuestionDao questionDao;
@@ -35,6 +35,8 @@ public class AddHomeWorkController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String showWizard(@ModelAttribute("user") User user, Model model){
+        if(!user.isProf())
+            throw new AuthorizationException();
         Homework homework = new Homework();
         homework.setCourse(user.getCourseSelected());
         user.getCourseSelected().setHomework(homework);

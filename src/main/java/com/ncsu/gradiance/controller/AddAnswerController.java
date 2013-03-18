@@ -21,7 +21,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/addAnswer")
 @SessionAttributes("user")
-public class AddAnswerController {
+public class AddAnswerController extends BaseController{
 
     private QuestionDao questionDao;
     @Autowired
@@ -30,7 +30,9 @@ public class AddAnswerController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String showWizard(){
+    public String showWizard(@ModelAttribute("user") User user){
+        if(!user.isProf())
+            throw new AuthorizationException();
         return "selectTopic";
     }
 
@@ -122,6 +124,8 @@ public class AddAnswerController {
     @ModelAttribute("topic")
     public List<String> getTopics(@ModelAttribute("user") User user,
                                   BindingResult result){
+        if(user.getCourseSelected() == null)
+            return Collections.singletonList("");
         List<String> topics = new ArrayList<>();
         for(Topic topic : user.getCourseSelected().getTopics())
             topics.add(topic.toString());
@@ -132,7 +136,8 @@ public class AddAnswerController {
     public List<String> getQuestions(@ModelAttribute("user") User user,
                                      BindingResult result){
         List<String> questions = new ArrayList<>();
-        if(user.getCourseSelected().getSelectedTopic() == null)
+        if(user.getCourseSelected() == null || user.getCourseSelected().
+                getSelectedTopic() == null)
             return Collections.singletonList("");
         if(user.getCourseSelected().getSelectedTopic().getQuestions() == null){
             Topic selectedTopic = user.getCourseSelected().getSelectedTopic();

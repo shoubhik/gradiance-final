@@ -23,7 +23,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/reports")
 @SessionAttributes("user")
-public class ReportController {
+public class ReportController extends BaseController{
 
 
     private UserDao userDao;
@@ -34,6 +34,8 @@ public class ReportController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String showForm(@ModelAttribute("user") User user){
+        if(!user.isProf())
+            throw new AuthorizationException();
         return "reports";
 
     }

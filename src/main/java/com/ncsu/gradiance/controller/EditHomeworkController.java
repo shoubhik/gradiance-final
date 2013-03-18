@@ -16,7 +16,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/editHomework")
 @SessionAttributes("user")
-public class EditHomeworkController {
+public class EditHomeworkController extends BaseController{
 
 
     private HomeworkDao homeworkDao;
@@ -28,6 +28,8 @@ public class EditHomeworkController {
     @RequestMapping(method = RequestMethod.GET)
     public String showWizard(@ModelAttribute("user") User user,
                              BindingResult result, Model model){
+        if(!user.isProf())
+            throw new AuthorizationException();
         model.addAttribute("editHomework", true);
         Course course = user.getCourseSelected();
         List<Homework> homeworks = this.homeworkDao.

@@ -21,7 +21,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/attemptHomework")
 @SessionAttributes("user")
-public class AttemptHomeworkController {
+public class AttemptHomeworkController extends BaseController{
 
 
     private HomeworkDao homeworkDao;
@@ -34,6 +34,8 @@ public class AttemptHomeworkController {
     public String showHomeworks(@ModelAttribute("user") User user,
                                  BindingResult result,
                                 Model model){
+        if(!user.isStudent())
+            throw new AuthorizationException();
         List<Homework> homeworks = this.homeworkDao.getHomeworksStudentCanAttempt(
                 user.getUserName(), user.getCourseSelected().getCourseId());
         user.getCourseSelected().setHomeworks(homeworks);
@@ -49,7 +51,7 @@ public class AttemptHomeworkController {
         pageForms.put(1,"selectHomeworkToAttempt");
         pageForms.put(2,"submitHomeworkAttempt");
         if(request.getParameter("_cancel") != null){
-            return "redirect:attemptHomework";
+            return "redirect:selectCourse";
         }
         else if(request.getParameter("_finish") != null){
             // handle finish
