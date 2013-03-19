@@ -75,6 +75,10 @@ public class AddHomeWorkController extends BaseController{
                     getHomework(), request, result,
                                  this.homeworkDao, course);
             validateHomework.validateNewHomeWork();
+            if(result.hasErrors()) {
+                model.addAttribute("questions", user.getCourseSelected().getQuestions());
+                return  "submitHomework";
+            }
             this.homeworkDao.insertHomework(course.getHomework(), result);
             if(result.hasErrors()) {
                 model.addAttribute("questions", user.getCourseSelected().getQuestions());

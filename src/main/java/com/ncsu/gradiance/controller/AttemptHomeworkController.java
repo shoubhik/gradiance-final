@@ -66,6 +66,7 @@ public class AttemptHomeworkController extends BaseController{
             scorer.calculate();
             attempt.submit(this.homeworkDao);
             model.addAttribute("summary", attempt);
+            model.addAttribute("attempt", true);
             return "viewHomeworkSubmissionSummary";
         }
         else{
