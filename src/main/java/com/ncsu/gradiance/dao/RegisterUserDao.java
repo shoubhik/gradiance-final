@@ -54,6 +54,15 @@ public class RegisterUserDao {
                                          new Long(Math.round(Math.random() * 100000))});
     }
 
+    public void registerTA(String studentId, String courseId, Errors errors){
+        try{
+        this.jdbcTemplate.update("insert into course_ta(course_id, student_id) values(?, ?)",
+                                 new Object[]{courseId, studentId});
+        }catch(Exception e){
+            errors.rejectValue("","", e.getMessage());
+        }
+    }
+
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }

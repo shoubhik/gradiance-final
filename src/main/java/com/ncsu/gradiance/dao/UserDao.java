@@ -95,7 +95,7 @@ public class UserDao {
         return count == 1;
     }
 
-    private boolean isStudent(String uid){
+    public boolean isStudent(String uid){
         int count =  this.jdbcTemplate.queryForInt("select count(*) from students where student_id = ? ",
                                                    new Object[]{uid});
         return count == 1;

@@ -13,6 +13,7 @@ Selected Course: <c:out value="${user.courseSelected}"/> | <c:out value="${user.
 <a href="addQuestion">add question</a><br/>
 <a href="addAnswer">add answer</a><br/>
 <a href="reports">reports</a><br/>
+<a href="addTA">Add TA for the course</a> <br/>
 <a href="selectCourse">select another course</a><br/>
 
 

@@ -24,6 +24,9 @@ public class CourseDao {
 
     private JdbcTemplate jdbcTemplate;
 
+
+    private UserDao userDao;
+
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
@@ -57,8 +60,13 @@ public class CourseDao {
             if(user.isProf())
                 addCourseToProf(courseId, user.getUserName());
             else if(user.isStudent()) {
-                addCourseToStudent(courseId, user.getUserName());
-                courseId = getCourseIdByToken(courseId);
+                String tokenId = courseId;
+                courseId = getCourseIdByToken(tokenId);
+                if(userDao.isTA(user.getUserName(), courseId)){
+                    errors.rejectValue("", "", "you are already registered as a TA for the course");
+                    return null;
+                }
+                addCourseToStudent(tokenId, user.getUserName());
             }
             Course course = getCourseById(courseId);
             user.getAddedCourses().add(course);
@@ -138,4 +146,13 @@ public class CourseDao {
             return course;
         }
     }
+
+    public UserDao getUserDao() {
+        return userDao;
+    }
+
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
 }
